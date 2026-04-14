@@ -28,7 +28,7 @@ A high-performance, custom CUDA implementation of Symmetric (Absmax) Quantizatio
 ## Build & Installation
 
 ```bash
-git clone [https://github.com/brandonviaje/cuQuant8.git](https://github.com/brandonviaje/cuQuant8.git)
+git clone https://github.com/brandonviaje/cuQuant8.git
 cd cuQuant8
 
 # Install via PyTorch setup.py
