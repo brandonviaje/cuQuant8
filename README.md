@@ -8,7 +8,7 @@ A high-performance, custom CUDA implementation of Symmetric (Absmax) Quantizatio
 *If you only read one section, read this.*
 
 * **Memory Reduction:** Achieved a **4x reduction** in weight memory footprint (FP32 -> INT8) with `< 0.1%` degradation in accuracy on standard evaluation distributions.
-* **Throughput Gain:** `cuBLASLt` INT8 MatMul achieved a **[X.X]x speedup** over PyTorch's native FP32 `torch.matmul` on an [Insert GPU Model, e.g., RTX 3090 / A100].
+* **Throughput Gain:** `cuBLASLt` INT8 MatMul achieved a **[X.X]x speedup** over PyTorch's native FP32 `torch.matmul` on an RTX2060.
 * **Bandwidth Utilization:** Custom parallel reduction kernel for finding `absmax` utilizes **[X]% of peak memory bandwidth** (profiled via Nsight Compute).
 
 *(Reminder to add a clean bar chart here comparing FP32 vs INT8 execution time across different batch sizes)*
