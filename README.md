@@ -18,7 +18,7 @@ The following graphs illustrate the complete performance profile of the implemen
 2. **Accuracy**: Tracks Mean Squared Error (MSE) to ensure numerical stability during the 8-bit squashing process.
 3. **Throughput**: Shows the "True" hardware utilization of the isolated Tensor Core kernel.
 
-![INT8 Tensor Core Pipeline Performance](src/benchmark_results.png)
+![INT8 Tensor Core Pipeline Performance](src/final_benchmark.png)
 
 ## Features
 * **Warp-Level Parallel Reduction**: A custom ``findAbsMax`` kernel that uses warp-shuffle intrinsics (``__shfl_down_sync``) to calculate quantization scales at the speed of the L1 cache.
