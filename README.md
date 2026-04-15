@@ -11,8 +11,6 @@ A high-performance, custom CUDA implementation of Symmetric (Absmax) Quantizatio
 * **Throughput Gain:** `cuBLASLt` INT8 MatMul achieved a **[X.X]x speedup** over PyTorch's native FP32 `torch.matmul` on an RTX2060.
 * **Bandwidth Utilization:** Custom parallel reduction kernel for finding `absmax` utilizes **[X]% of peak memory bandwidth** (profiled via Nsight Compute).
 
-*(Reminder to add a clean bar chart here comparing FP32 vs INT8 execution time across different batch sizes)*
-
 ## Core Features
 * **Custom Absmax Kernel:** Hand-written CUDA kernel using warp-level primitives (`__shfl_down_sync`) for highly optimized parallel reductions to find the absolute maximum for scaling.
 * **Outlier Clipping:** Configurable clamp threshold to preserve core data resolution and prevent extreme outliers from crushing the INT8 distribution.
@@ -21,7 +19,7 @@ A high-performance, custom CUDA implementation of Symmetric (Absmax) Quantizatio
 
 ## Hardware & Software Requirements
 * **GPU:** NVIDIA GPU with Compute Capability 8.0+ (Ampere, Ada, Hopper) required for specific Tensor Core instructions.
-* **OS:** Linux (Ubuntu 20.04/22.04) or WSL2.
+* **OS:** Linux (Ubuntu) or WSL2.
 * **CUDA:** Toolkit 11.8 or newer.
 * **Compiler:** `nvcc` and `g++` (C++17).
 
