@@ -1,6 +1,6 @@
 # cuQuant8
 
-A high-performance CUDA implementation of **Symmetric (Absmax) Quantization** and **INT8 Matrix *Multiplication**, leveraging NVIDIA Tensor Cores via `cuBLASLt`. This project demonstrates how to bypass standard FP32 bottlenecks to achieve massive throughput gains in deep learning inference.
+A high-performance CUDA implementation of **Symmetric (Absmax) Quantization** and **INT8 Matrix Multiplication**, leveraging NVIDIA Tensor Cores via `cuBLASLt`. This project demonstrates how to bypass standard FP32 bottlenecks to achieve massive throughput gains in deep learning inference.
 
 ![CUDA Version](https://img.shields.io/badge/CUDA-11.8%2B-green)
 
