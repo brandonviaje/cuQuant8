@@ -1,24 +1,31 @@
 # cuQuant8
 
-A high-performance, custom CUDA impl of Symmetric (Absmax) Quantization and INT8 Matrix Multiplication, leveraging NVIDIA Tensor Cores via `cuBLASLt`. 
+A high-performance CUDA implementation of **Symmetric (Absmax) Quantization** and **INT8 Matrix *Multiplication**, leveraging NVIDIA Tensor Cores via `cuBLASLt`. This project demonstrates how to bypass standard FP32 bottlenecks to achieve massive throughput gains in deep learning inference.
 
 ![CUDA Version](https://img.shields.io/badge/CUDA-11.8%2B-green)
 
 ## Performance Highlights
 
-* **Compute Saturation:** The INT8 pipeline successfully saturates the GPU compute blocks at larger matrix dimensions, reaching a peak throughput of **>8.0 TFLOPS** on an RTX 2060 at 8192x8192.
-* **Millisecond Latency:** E2E execution (Quantization -> Tensor Core MatMul -> Dequantization) for a massive 4096x4096 matrix completes in just **~36.8ms**.
-* **Memory Reduction:** Achieved a **4x reduction** in weight memory footprint (FP32 -> INT8) with `< 0.1%` degradation in accuracy on standard evaluation distributions.
+* **Isolated Kernel Throughput**: Reached a peak of **46.84 TFLOPS** at 8192x8192 dimensions, saturating the hardware compute blocks by isolating the execution from PCIe overhead.
+* **End-to-End Speedup**: Achieved a **~5.5x** speedup over the standard `cuBLAS` FP32 baseline for large-scale matrices.
+* **Massive Latency Reduction**: The entire INT8 pipeline (Quantize $\rightarrow$ MatMul $\rightarrow$ Dequantize) completes an 8192x8192 operation in just **~35ms**, compared to **~200ms** in FP32.
+* **Memory Efficiency**: 4x reduction in weight memory footprint, enabling larger model deployments on consumer-grade hardware.
 
-### Hardware Scaling Benchmark
-The graph below demonstrates the expected cubic scaling of execution time alongside the hardware throughput (TFLOPS) as the Tensor Cores reach full utilization.
+### Benchmark Analysis
+The following graphs illustrate the complete performance profile of the implementation:
+
+1. **Latency**: Demonstrates the 5x gap between our INT8 pipeline and standard FP32.
+2. **Accuracy**: Tracks Mean Squared Error (MSE) to ensure numerical stability during the 8-bit squashing process.
+3. **Throughput**: Shows the "True" hardware utilization of the isolated Tensor Core kernel.
 
 ![INT8 Tensor Core Pipeline Performance](src/benchmark_results.png)
 
 ## Features
-* **Custom Absmax Kernel:** CUDA kernel for optimized parallel reductions to find the absolute maximum for the scale factor.
-* **Dynamic Hardware Heuristics:** Queries the `cuBLASLt` heuristic engine at runtime to dynamically allocate VRAM scratchpads and map the optimal INT8 algorithm for the specific host GPU architecture.
-* **Custom Dequantization:** Bypasses restrictive `cuBLAS` API layout constraints by extracting the raw INT32 accumulator data and projecting it back to FP32 space via a custom, lightweight CUDA kernel.
+* **Warp-Level Parallel Reduction**: A custom ``findAbsMax`` kernel that uses warp-shuffle intrinsics (``__shfl_down_sync``) to calculate quantization scales at the speed of the L1 cache.
+* **cuBLASLt Hardware Heuristics**: Dynamically queries NVIDIA's heuristic engine to select the optimal tiling and wave-front strategy for the specific GPU architecture detected at runtime.
+* **Custom Dequantization Kernel**: A specialized fused-multiply-add (FMA) kernel that handles the bit-shifting and scaling required to project 32-bit integer accumulators back into 32-bit floating-point space.
+* **Isolated Benchmarking**: Precision timers utilizing ``cudaEvent_t`` to separate kernel execution time from memory management and PCIe transfer overhead.
+
 
 ## Hardware & Software Requirements
 * **GPU:** NVIDIA GPU with Compute Capability 7.5+ (Turing, Ampere, Ada, Hopper) required for specific INT8 Tensor Core instructions.
@@ -40,7 +47,7 @@ mkdir build && cd build
 cmake ..
 make
 
-# Run the pipeline (pass a matrix dimension)
+# Run individual test (pass a matrix dimension, default is 4096)
 ./cuQuant8 8192
 ```
 
