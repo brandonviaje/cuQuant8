@@ -4,7 +4,7 @@
 #include <limits>
 
 std::array<int8_t, 7> quantize_int8(std::array<float, 7> &arr) {
-  // find the ABS max of the arr/matrix
+  // find ABS max of arr/matrix
   float absMax{-std::numeric_limits<float>::infinity()};
 
   for (int i{}; i < arr.size(); i++) {
@@ -20,7 +20,7 @@ std::array<int8_t, 7> quantize_int8(std::array<float, 7> &arr) {
 
   std::array<int8_t, 7> result{};
 
-  // quantize the arr/matrix using the scale factor
+  // quantize arr/matrix using the scale factor
   for (int i{}; i < arr.size(); i++) {
     result[i] = static_cast<int8_t>(std::round(arr[i] * scale));
   }
@@ -34,7 +34,7 @@ std::array<float, 7> dequantize_int8(std::array<int8_t, 7> arr) {
 
   std::array<float, 7> result{};
 
-  // take in the quantized arr/matrix and dequantize
+  // take in quantized arr/matrix and dequantize
   for (int i{}; i < arr.size(); i++) {
     result[i] = arr[i] / scale;
   }
