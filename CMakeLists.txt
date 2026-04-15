@@ -7,11 +7,12 @@ set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 set(CMAKE_CUDA_ARCHITECTURES 75)
 
 add_executable(cuQuant8
+    src/dequantize.cu
     src/main.cu
-    src/quantize.cu
     src/matmul.cu
+    src/quantize.cu
 )
 
 find_package(CUDAToolkit REQUIRED)
 
-target_link_libraries(cuQuant8 PRIVATE CUDA::cublasLt)
+target_link_libraries(cuQuant8 PRIVATE CUDA::cublas CUDA::cublasLt)
