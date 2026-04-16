@@ -35,7 +35,7 @@ The following graphs illustrate the complete performance profile of the implemen
 
 ## Build & Installation
 
-### Standalone C++ Build (CMake)
+### C++ Build (CMake)
 The core CUDA pipeline is built using CMake. This compiles the custom kernels and links the `cuBLASLt` hardware APIs.
 
 ```bash
@@ -51,7 +51,7 @@ make
 ./cuQuant8 8192
 ```
 
-### Python Benchmarking Suite
+### Python Benchmarking
 ```bash
 cd src
 
