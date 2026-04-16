@@ -39,7 +39,7 @@ The following graphs illustrate the complete performance profile of the implemen
 The core CUDA pipeline is built using CMake. This compiles the custom kernels and links the `cuBLASLt` hardware APIs.
 
 ```bash
-git clone [[https://github.com/brandonviaje/cuQuant8.git](https://github.com/brandonviaje/cuQuant8.git)](https://github.com/brandonviaje/cuQuant8.git)
+git clone https://github.com/brandonviaje/cuQuant8.git
 cd cuQuant8
 
 # Configure and build project
