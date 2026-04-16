@@ -27,7 +27,6 @@ for size in sizes:
         ops = 2.0 * (size ** 3)
         tflops = (ops / (matmul_ms / 1000.0)) / (10**12)
 
-        # add to lists to build graph
         int8_times.append(int8_ms)
         fp32_times.append(fp32_ms)
         mse_list.append(mse)
